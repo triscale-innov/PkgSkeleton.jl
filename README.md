@@ -13,11 +13,25 @@ Julia package for creating new packages quickly. This is the successor of [skele
 
 ## Installation
 
-The package is registered. Add with
+This is a clone of registered package
+[PkgSkeleton.jl](github.com/tpapp/PkgSkeleton.jl). In order to install this
+specific variant (and the template which goes with it), please run
 
 ```julia
-pkg> add PkgSkeleton
+pkg> add https://github.com/triscale-innov/PkgSkeleton.jl
 ```
+
+Here is a list of the few modifications that this version brings, which are not
+(yet?) in the official, registered package:
+
+- fix a small issue with test cases  (see
+  [PR#10](https://github.com/tpapp/PkgSkeleton.jl/pull/10))
+- automatically instantiate the `docs/` sub-project during project generation  (see
+  [PR#11](https://github.com/tpapp/PkgSkeleton.jl/pull/11))
+- interactive way to validate and provide package parameters in case default
+  ones (coming from `git config`) are missing (see
+  [PR#12](https://github.com/tpapp/PkgSkeleton.jl/pull/12))
+- default template sets [Retest](https://github.com/triscale-innov/Retest.jl) up
 
 ## Usage
 

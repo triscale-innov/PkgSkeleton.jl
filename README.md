@@ -32,6 +32,8 @@ Here is a list of the few modifications that this version brings, which are not
   ones (coming from `git config`) are missing (see
   [PR#12](https://github.com/tpapp/PkgSkeleton.jl/pull/12))
 - default template sets [Retest](https://github.com/triscale-innov/Retest.jl) up
+- default template contains a script to locally generate HTML coverage reports
+  using `genhtml`
 
 ## Usage
 

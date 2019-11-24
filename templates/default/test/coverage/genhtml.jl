@@ -4,13 +4,16 @@ exec julia --color=yes --startup-file=no "${BASH_SOURCE[0]}"
 =#
 
 try
-    realpath(PROGRAM_FILE) == realpath(@__FILE__)
+    @assert ENV["__JULIA_SPAWNED__"] == "1"
+    true
 catch
+    @info "Spawning new Julia process"
     let file = @__FILE__
-        println("Spawning new Julia process...")
+        ENV["__JULIA_SPAWNED__"] = "1"
         run(`$(Base.julia_cmd()) $file`)
-        false
+        ENV["__JULIA_SPAWNED__"] = "0"
     end
+    false
 end && begin
     using Pkg
     Pkg.activate(@__DIR__)

@@ -1,4 +1,4 @@
-push!(LOAD_PATH,joinpath(@__DIR__, "..", "src"))
+push!(LOAD_PATH,joinpath(@__DIR__, ".."))
 using Documenter, {PKGNAME}
 
 makedocs(

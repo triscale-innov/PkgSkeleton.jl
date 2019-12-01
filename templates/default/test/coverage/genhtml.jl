@@ -25,6 +25,13 @@ end && begin
         LCOV.writefile(infofile, coverage)
 
         outdir = joinpath(@__DIR__, "html")
-        run(`genhtml $infofile --output-directory=$outdir`)
+        rm(outdir, recursive=true, force=true)
+        mkdir(outdir)
+        cmd = Sys.iswindows() ? "genhtml.cmd" : "genhtml"
+        run(`$cmd $infofile --output-directory=$outdir`)
     end
 end
+
+# Local Variables:
+# mode: julia
+# End:

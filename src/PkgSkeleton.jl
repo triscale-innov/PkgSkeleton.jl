@@ -219,6 +219,8 @@ function generate(dest_dir; template = :default,
         run(`$(Base.julia_cmd()) $(docs_setup)`)
     end
 
+    run(`$(Base.julia_cmd()) --project=$(dest_dir) -e 'using Pkg; Pkg.instantiate()'`)
+
     # done
     @info "successfully generated $(pkg_name)" dest_dir
     true

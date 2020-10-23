@@ -1,22 +1,23 @@
 #!/bin/bash
 #=
+export __JULIA_SPAWNED__=1
 exec julia --color=yes --startup-file=no "${BASH_SOURCE[0]}"
 =#
 
-try
-    @assert ENV["__JULIA_SPAWNED__"] == "1"
-    true
-catch
+if get(ENV, "__JULIA_SPAWNED__", "0") != "1"
     @info "Spawning new Julia process"
     let file = @__FILE__
-        ENV["__JULIA_SPAWNED__"] = "1"
-        run(`$(Base.julia_cmd()) $file`)
-        ENV["__JULIA_SPAWNED__"] = "0"
+        try
+            ENV["__JULIA_SPAWNED__"] = "1"
+            run(`$(Base.julia_cmd()) $file`)
+        finally
+            ENV["__JULIA_SPAWNED__"] = "0"
+        end
     end
-    false
-end && begin
+else
     using Pkg
     Pkg.activate(@__DIR__)
+    Pkg.instantiate()
 
     using Coverage
     cd(joinpath(@__DIR__, "..", "..")) do
@@ -31,6 +32,8 @@ end && begin
         run(`$cmd $infofile --output-directory=$outdir`)
     end
 end
+
+nothing
 
 # Local Variables:
 # mode: julia

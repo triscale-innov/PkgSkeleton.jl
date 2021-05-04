@@ -14,11 +14,19 @@ Julia package for creating new packages and updating existing ones, following co
 
 ## Installation
 
-The package is registered. Add with
-
+This is a clone of registered package
+[PkgSkeleton.jl](github.com/tpapp/PkgSkeleton.jl). In order to install this
+specific variant (and the template which goes with it), please run
 ```julia
-pkg> add PkgSkeleton
+pkg> add https://github.com/triscale-innov/PkgSkeleton.jl#training
 ```
+
+Here is a list of the few modifications that this version brings, which are not
+(yet?) in the official, registered package:
+
+- interactive way to validate and provide package parameters in case default
+  ones (coming from `git config`) are missing (see
+  [PR#12](https://github.com/tpapp/PkgSkeleton.jl/pull/12))
 
 ## Usage
 

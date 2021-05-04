@@ -52,6 +52,15 @@ else
 end
 
 ####
+#### Mock _confirm_default since no user should be assumed to be in front of the keyboard.
+####
+
+function PkgSkeleton._confirm_default(prompt, default)
+    println("$prompt ($default)>")
+    prompt
+end
+
+####
 #### test components
 ####
 
@@ -70,14 +79,12 @@ end
 
 @testset "replacement values" begin
     # also see tests at the end for the error
-    @testset "using environment" begin
-        d = fill_replacements(NamedTuple(); target_dir = "/tmp/FOO.jl")
-        @test d.PKGNAME == "FOO"
-        @test d.UUID isa UUID
-        @test d.GHUSER == GHUSER
-        @test d.USERNAME == USERNAME
-        @test d.USEREMAIL == USEREMAIL
-        @test d.YEAR == year(now())
+    @testset "interactive" begin
+        d = PkgSkeleton.interactive_replacements()
+        @test d.GHUSER == "Github user name"
+        @test d.USERNAME == "Author name"
+        @test d.USEREMAIL == "Author email"
+        @test d.YEAR == "Copyright year"
     end
 
     @testset "using explicit replacements" begin

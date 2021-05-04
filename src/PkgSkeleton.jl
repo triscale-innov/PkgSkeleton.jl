@@ -147,6 +147,28 @@ function fill_replacements(user_replacements; target_dir)
     NamedTuple{keys(defaults)}(map(_ensure_value, keys(defaults), values(defaults)))
 end
 
+function _confirm_default(prompt, default)
+    print("$prompt ($default)> ")
+    val = readline()
+    val == "" ? default : val
+end
+
+function interactive_replacements()
+    c = LibGit2.GitConfig()
+    _from_git(opt) = try
+        LibGit2.get(AbstractString, c, opt)
+    catch
+        ""
+    end
+
+    (
+        USERNAME = _confirm_default("Author name", _from_git("user.name")),
+        USEREMAIL = _confirm_default("Author email", _from_git("user.email")),
+        GHUSER = _confirm_default("Github user name", _from_git("github.user")),
+        YEAR = _confirm_default("Copyright year", Dates.year(Dates.now())),
+    )
+end
+
 ####
 #### Template application
 ####
@@ -322,7 +344,7 @@ default: the package name is `"Foo"` for all of
 Use a different name only when you know what you are doing.
 """
 function generate(target_dir; template = :default,
-                  user_replacements::NamedTuple = NamedTuple(),
+                  user_replacements::NamedTuple = interactive_replacements(),
                   overwrite_uncommitted::Bool = false)
     target_dir = expanduser(target_dir)
     msg(:general, "getting template replacement values")

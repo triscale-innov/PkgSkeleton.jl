@@ -27,6 +27,7 @@ Here is a list of the few modifications that this version brings, which are not
 - interactive way to validate and provide package parameters in case default
   ones (coming from `git config`) are missing (see
   [PR#12](https://github.com/tpapp/PkgSkeleton.jl/pull/12))
+- support for `PackageCompiler` in the default template
 
 ## Usage
 

@@ -389,6 +389,13 @@ function generate(target_dir; template = :default,
     msg_and_write(:same, "the following files as they would not change, SKIPPING:",
                   nothing, same_files)
 
+    # build manifest
+    @info "Instantiate build subproject"
+    build = joinpath(target_dir, "build")
+    cd(build) do
+        run(`$(Base.julia_cmd()) --project=$(build) -e 'import Pkg; Pkg.instantiate()'`)
+    end
+
     # done
     msg(:general, "successfully generated $(replacements.PKGNAME)")
 

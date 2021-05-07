@@ -1,5 +1,5 @@
 # see documentation at https://juliadocs.github.io/Documenter.jl/stable/
-
+using Pkg; Pkg.activate(@__DIR__)
 using Documenter, {PKGNAME}
 
 makedocs(

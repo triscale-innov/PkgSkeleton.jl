@@ -390,6 +390,12 @@ function generate(target_dir; template = :default,
                   nothing, same_files)
 
     # build manifest
+    @info "Instantiate docs subproject"
+    docs = joinpath(target_dir, "docs")
+    cd(docs) do
+        run(`$(Base.julia_cmd()) --project=$(docs) -e 'using Pkg; Pkg.instantiate(); Pkg.develop(PackageSpec(path=".."))'`)
+    end
+
     @info "Instantiate build subproject"
     build = joinpath(target_dir, "build")
     cd(build) do
